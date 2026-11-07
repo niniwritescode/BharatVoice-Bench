@@ -1,50 +1,60 @@
-
-<div align="center">
+ <div align="center">
 
 # 🇮🇳 BharatVoice Bench
 
-### Evaluating Multilingual Speech Recognition in Controlled Background Noise
+### Evaluating Multilingual Speech Recognition Under Controlled Background Noise
 
-**A research-driven evaluation framework for Gnani Prisma v2.5 across English, Hindi and Hinglish.**
+**An evaluation framework for Gnani Prisma v2.5 across English, Hindi, and Hinglish.**
 
-![Python](https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white)
-![Flask](https://img.shields.io/badge/Flask-000000?style=for-the-badge&logo=flask&logoColor=white)
-![ASR](https://img.shields.io/badge/Task-Speech_Recognition-6C5CE7?style=for-the-badge)
-![Challenge](https://img.shields.io/badge/Great_Indian_AI_Internship-FF9933?style=for-the-badge)
+[![Python](https://img.shields.io/badge/Python-3.x-3776AB?logo=python&logoColor=white)](https://www.python.org/)
+[![Flask](https://img.shields.io/badge/Flask-Dashboard-000000?logo=flask&logoColor=white)](https://flask.palletsprojects.com/)
+[![ASR](https://img.shields.io/badge/Task-Speech%20Recognition-6C5CE7)]()
+[![Challenge](https://img.shields.io/badge/Project-Great%20Indian%20AI%20Internship-FF9933)]()
 
-**[GitHub Repository](https://github.com/niniwritescode/BharatVoice-Bench)**
+[**GitHub Repository**](https://github.com/niniwritescode/BharatVoice-Bench)
 
 </div>
 
 ---
 
-## 🚀 About the Project
+## 1. Project Overview
 
-**BharatVoice Bench** is a multilingual Automatic Speech Recognition (ASR) evaluation framework developed to study how reliably **Gnani Prisma v2.5** transcribes speech under different language, speaker and background-noise conditions.
+BharatVoice Bench is a speech recognition evaluation framework developed to examine how reliably Gnani Prisma v2.5 transcribes spoken content across different languages, speakers, and background-noise conditions.
 
-The project evaluates speech recognition across English, Hindi and Hinglish using controlled noise experiments and Word Error Rate (WER) analysis.
+The project evaluates three language categories:
 
-It also provides an interactive Flask dashboard to visualize evaluation results and compare model performance.
+- English
+- Hindi
+- Hinglish
 
-> **Research Question:** How reliably does Gnani Prisma v2.5 preserve spoken content across English, Hindi and Hinglish when exposed to different speakers and controlled background noise?
+It uses clean speech recordings and controlled noisy versions generated with crowd, fan, and traffic noise at different signal-to-noise ratios (SNRs).
 
-## 📊 Experiment Overview
+The resulting transcriptions are evaluated using Word Error Rate (WER), supported by error analysis and a Flask-based dashboard for exploring the results.
 
-| Parameter | Details |
-|---|---|
-| ASR Model | Gnani Prisma v2.5 |
-| Languages | English, Hindi, Hinglish |
+**Research question:**
+
+How reliably does Gnani Prisma v2.5 preserve spoken content across English, Hindi, and Hinglish when exposed to different speakers and controlled background noise?
+
+## 2. Experiment at a Glance
+
+| Evaluation dimension | Coverage |
+|---|---:|
+| Languages | 3 |
 | Speakers | 3 |
-| Clean Recordings | 9 |
-| Generated Noisy Recordings | 81 |
-| Successful Noisy Transcriptions | 78 |
-| Noise Conditions | Crowd, Fan, Traffic |
-| SNR Levels | 0 dB, 10 dB, 20 dB |
-| Evaluation Metric | Word Error Rate (WER) |
+| Clean recordings | 9 |
+| Generated noisy recordings | 81 |
+| Successful noisy transcriptions | 78 |
+| Failed API requests | 3 |
+| Noise conditions | Crowd, Fan, Traffic |
+| SNR levels | 0 dB, 10 dB, 20 dB |
 
-## 🔍 Key Results
+The three failed requests returned HTTP 403 responses. They were Hindi recordings associated with speaker Ram and were excluded from WER calculations. Their exact noise-condition filenames have not been independently verified, so no specific noise category is attributed to these failures.
 
-### Clean Recording Evaluation
+## 3. Evaluation Results
+
+### 3.1 Clean recordings
+
+The clean-recording corpus WER results were:
 
 | Language | Corpus WER |
 |---|---:|
@@ -52,109 +62,253 @@ It also provides an interactive Flask dashboard to visualize evaluation results 
 | Hindi | 6.31% |
 | Hinglish | 9.38% |
 
-### Noisy Recording Evaluation
+### 3.2 Noisy recordings
 
-**Overall normalized corpus WER: 5.45%**
+The following results are from the 78 successfully transcribed noisy recordings, using the normalized scoring pipeline.
 
-| Evaluation Category | Group | WER |
-|---|---|---:|
-| Language | English | 5.31% |
-| Language | Hindi | 2.03% |
-| Language | Hinglish | 9.14% |
-| Noise | Crowd | 6.64% |
-| Noise | Fan | 4.09% |
-| Noise | Traffic | 5.77% |
-| SNR | 0 dB | 7.74% |
-| SNR | 10 dB | 4.91% |
-| SNR | 20 dB | 3.71% |
-| Speaker | Speaker 1 | 5.45% |
-| Speaker | Speaker 2 | 4.74% |
-| Speaker | Speaker 3 | 6.08% |
+**Language-wise WER**
 
-**Important evaluation note:**
+| Language | Corpus WER |
+|---|---:|
+| English | 5.31% |
+| Hindi | 2.03% |
+| Hinglish | 9.14% |
 
-- Strict, non-normalized corpus WER: 37.48%.
-- Normalized corpus WER: 5.45%.
-- Mean per-record WER: 5.63%.
+**Noise-wise WER**
 
-Normalization accounts for selected formatting and number-expression variations. These metrics use different calculation approaches and should not be treated as interchangeable.
+| Noise condition | Corpus WER |
+|---|---:|
+| Crowd | 6.64% |
+| Fan | 4.09% |
+| Traffic | 5.77% |
 
-Three transcription requests returned HTTP 403 errors and were excluded from WER calculations. These are API request failures, not ASR transcription errors.
+**SNR-wise WER**
 
-The resulting subgroup counts are slightly uneven.
+| SNR | Corpus WER |
+|---|---:|
+| 0 dB | 7.74% |
+| 10 dB | 4.91% |
+| 20 dB | 3.71% |
 
-## 📈 Dashboard & Visualizations
+**Speaker-wise WER**
 
-The project includes an interactive Flask dashboard for exploring evaluation results.
+| Anonymized speaker | Corpus WER |
+|---|---:|
+| Speaker 1 | 5.45% |
+| Speaker 2 | 4.74% |
+| Speaker 3 | 6.08% |
 
-### WER by Language
+**Overall normalized noisy-corpus WER: 5.45%.**
 
-![WER by Language](static/graphs/wer_by_language.png)
+The strict, non-normalized noisy-corpus WER was 37.48%. The mean of individual recording-level WER values was 5.63%. These are different measurements: corpus WER aggregates word errors across the complete corpus, while the mean recording-level WER gives each recording equal weight.
 
-### WER by Noise Condition
+### Important interpretation note
 
-![WER by Noise](static/graphs/wer_by_noise.png)
+The clean and noisy scoring scripts currently use different normalization rules. Therefore, the clean and noisy language-wise WER values should not be treated as a directly comparable measurement until both datasets are rescored using the same normalization pipeline.
 
-### WER by Signal-to-Noise Ratio
+In particular, the lower noisy Hindi WER does not establish that background noise improved Hindi recognition. The clean Hindi corpus contains only three recordings, whereas the noisy Hindi results contain 24 successful recordings. The scoring-rule difference and sample-size difference both affect this comparison.
 
-![WER by SNR](static/graphs/wer_by_snr.png)
+The subgroup results are pilot-study observations, not statistically conclusive claims about general speech recognition performance.
 
-### WER by Speaker
+## 4. Normalization and WER Calculation
 
-![WER by Speaker](static/graphs/wer_by_speaker.png)
+Word Error Rate measures the difference between a reference transcript and a recognized transcript.
 
-### Dashboard Features
-
-- Overall evaluation metrics
-- Language-wise performance comparison
-- Noise-wise WER analysis
-- SNR-based performance analysis
-- Speaker-wise evaluation
-- Recording-level result exploration
-- Interactive charts and visual summaries
-
-## 🧪 Evaluation Methodology
-
-The primary evaluation metric is **Word Error Rate (WER)**.
-
-\[
-WER = \frac{S+D+I}{N}\times100
-\]
+$$
+\mathrm{WER} = \frac{S+D+I}{N}\times 100
+$$
 
 Where:
 
-- S = Substitutions
-- D = Deletions
-- I = Insertions
-- N = Number of words in the reference transcript
+- **S** = Substitutions
+- **D** = Deletions
+- **I** = Insertions
+- **N** = Number of words in the reference transcript
 
-### Experiment Workflow
+Two scoring views were examined:
 
-1. Prepare clean speech recordings in English, Hindi and Hinglish.
-2. Generate noisy audio samples using crowd, fan and traffic noise.
-3. Apply controlled Signal-to-Noise Ratio levels of 0, 10 and 20 dB.
-4. Submit audio samples to Gnani Prisma v2.5.
-5. Obtain speech-to-text transcription outputs.
-6. Compare outputs against reference transcripts.
-7. Calculate strict and normalized WER.
-8. Analyze errors and generate visualizations.
-9. Export anonymized evaluation data for the public dashboard.
+1. **Strict WER:** Evaluates text with minimal normalization.
+2. **Normalized WER:** Applies text normalization to account for selected formatting and number-expression variations.
 
-## 🛠️ Technology Stack
+Examples of normalization targets include:
 
-| Technology | Purpose |
+| Text variation | Canonical representation |
 |---|---|
-| Python | Core programming |
-| Gnani Prisma v2.5 | Speech recognition |
-| Flask | Web dashboard backend |
-| HTML & CSS | Dashboard interface |
-| JavaScript | Frontend interactions |
-| Matplotlib | Data visualization |
-| JiWER | WER evaluation |
-| FFmpeg | Audio processing |
-| NumPy | Numerical operations |
+| twelve thousand five hundred fifty | 12550 |
+| twenty five | 25 |
+| ten thirty | 1030 |
+| Numeric and currency formatting variations | Standardized numeric text |
 
-## 📁 Project Structure
+These examples illustrate the types of variation considered; they are not an exhaustive list of normalization rules.
+
+The noisy corpus produced 37.48% strict WER and 5.45% normalized WER. This substantial difference shows that normalization has a major effect on the measured score.
+
+**Normalization limitation:** The clean scoring script contains inline normalization rules, while the noisy scoring script uses shared normalization functions from `normalization.py`. The rule sets are not identical. The exact point at which the normalization rules were finalized relative to output inspection has not been documented. Consequently, the normalized clean and noisy results require a common scoring pipeline before direct comparison.
+
+## 5. Error Analysis
+
+Across the 78 successfully transcribed noisy recordings, the normalized evaluation counted:
+
+| Error type | Count |
+|---|---:|
+| Substitutions | 79 |
+| Deletions | 34 |
+| Insertions | 37 |
+| **Total errors** | **150** |
+
+### Language-level observations
+
+| Language | Substitutions | Deletions | Insertions |
+|---|---:|---:|---:|
+| English | 15 | 29 | 8 |
+| Hindi | 14 | 4 | 0 |
+| Hinglish | 50 | 1 | 29 |
+| **Total** | **79** | **34** | **37** |
+
+Hinglish contributed the largest number of substitutions and insertions in this dataset. This suggests that mixed-language speech and language-switching deserve closer investigation.
+
+English accounted for most deletions, while Hindi had fewer counted errors in the normalized noisy results.
+
+These observations describe this particular pilot corpus. They should not be interpreted as universal rankings of language recognition performance.
+
+## 6. Failed API Requests and Data Handling
+
+Three API requests returned HTTP 403 responses during the noisy evaluation.
+
+The failed requests were associated with:
+
+- Speaker: Ram
+- Language: Hindi
+- Count: 3 requests
+- Response: HTTP 403
+
+These failures were treated as API/request failures, not as transcription errors. They were excluded from WER calculations because no usable transcription was returned.
+
+The exact noise conditions associated with the three failed recordings have not yet been confirmed from the request logs.
+
+Because of these failures, the successful recording counts are uneven:
+
+| Dimension | Successful recordings |
+|---|---|
+| Language | English: 27, Hindi: 24, Hinglish: 27 |
+| Noise | Crowd: 24, Fan: 27, Traffic: 27 |
+| SNR | 26 recordings at each level |
+| Speaker | 27, 24, and 27 recordings |
+
+This imbalance should be considered when interpreting subgroup comparisons.
+
+## 7. Dashboard
+
+BharatVoice Bench includes a Flask dashboard for exploring the evaluation results.
+
+The dashboard provides:
+
+- Overall evaluation metrics
+- Language-wise WER comparisons
+- Noise-condition comparisons
+- SNR-level comparisons
+- Speaker-wise comparisons
+- Recording-level evaluation information
+
+### Dashboard visualizations
+
+**WER by language**
+
+![WER by language](static/graphs/wer_by_language.png)
+
+**WER by noise condition**
+
+![WER by noise condition](static/graphs/wer_by_noise.png)
+
+**WER by signal-to-noise ratio**
+
+![WER by SNR](static/graphs/wer_by_snr.png)
+
+**WER by speaker**
+
+![WER by speaker](static/graphs/wer_by_speaker.png)
+
+## 8. Experiment Workflow
+
+The evaluation workflow consists of the following stages:
+
+1. Prepare clean speech recordings in English, Hindi, and Hinglish.
+2. Generate controlled noisy versions using crowd, fan, and traffic noise.
+3. Prepare recordings at 0 dB, 10 dB, and 20 dB SNR.
+4. Submit the recordings to Gnani Prisma v2.5 through its speech-to-text API.
+5. Collect successful transcription responses.
+6. Compare recognized text with the corresponding reference transcripts.
+7. Calculate strict and normalized WER.
+8. Analyze substitutions, deletions, insertions, and subgroup patterns.
+9. Export anonymized numerical results for the dashboard.
+
+## 9. Technology Stack
+
+| Component | Technology |
+|---|---|
+| Speech recognition | Gnani Prisma v2.5 |
+| API integration | Python, Requests |
+| Backend | Python, Flask |
+| Frontend | HTML, CSS, JavaScript |
+| Audio preparation | FFmpeg |
+| Evaluation metric | Word Error Rate |
+| Scoring library | JiWER |
+| Data analysis | Python, Pandas |
+| Visualizations | Matplotlib |
+| Version control | Git and GitHub |
+
+## 10. Run the Dashboard Locally
+
+### Prerequisites
+
+- Python 3.x
+- Git
+- pip
+
+### Step 1: Clone the repository
+
+```bash
+git clone https://github.com/niniwritescode/BharatVoice-Bench.git
+cd BharatVoice-Bench
+```
+
+### Step 2: Create a virtual environment
+
+**Windows Command Prompt:**
+
+```cmd
+python -m venv venv
+venv\Scripts\activate
+```
+
+**macOS / Linux:**
+
+```bash
+python3 -m venv venv
+source venv/bin/activate
+```
+
+### Step 3: Install dependencies
+
+```bash
+pip install -r requirements.txt
+```
+
+### Step 4: Start the application
+
+```bash
+python app.py
+```
+
+Open the following address in your browser:
+
+```text
+http://127.0.0.1:5000
+```
+
+The dashboard uses the anonymized dataset stored in `public_data/`. Running the dashboard does not require an API key or access to private research recordings.
+
+## 11. Repository Structure
 
 ```text
 BharatVoice-Bench/
@@ -188,103 +342,63 @@ BharatVoice-Bench/
 └── README.md
 ```
 
-Private research directories containing original audio, reference transcripts and intermediate results are intentionally excluded from the public repository.
+Private working directories such as `data/`, `references/`, and `results/` are intentionally excluded from the public repository.
 
-## 💻 Run Locally
+## 12. Privacy and Responsible Sharing
 
-### 1. Clone the Repository
-
-```bash
-git clone https://github.com/niniwritescode/BharatVoice-Bench.git
-```
-
-```bash
-cd BharatVoice-Bench
-```
-
-### 2. Create a Virtual Environment
-
-**Windows:**
-
-```cmd
-python -m venv venv
-venv\Scripts\activate
-```
-
-**Linux / macOS:**
-
-```bash
-python3 -m venv venv
-source venv/bin/activate
-```
-
-### 3. Install Dependencies
-
-```bash
-pip install -r requirements.txt
-```
-
-### 4. Run the Dashboard
-
-```bash
-python app.py
-```
-
-Open your browser and visit:
-
-```text
-http://127.0.0.1:5000
-```
-
-The public dashboard uses the anonymized dataset in `public_data/` and does not require an API key.
-
-## 🔐 Privacy & Data Protection
-
-The public repository contains an anonymized evaluation dataset and the code required to explore the results.
+The public repository contains the evaluation framework and an anonymized numerical dataset.
 
 The following materials are intentionally excluded:
 
 - Original audio recordings
-- Personal reference sentences
-- Raw transcription outputs
+- Personal reference sentences and transcripts
+- Raw ASR transcription outputs
 - Private intermediate result files
-- API credentials and `.env` files
+- API keys and credentials
+- `.env` configuration files
 
-Speaker names and recording identifiers are anonymized in the public dataset.
+Speaker labels and recording identifiers in the public dataset are anonymized.
 
-## ⚠️ Limitations
+The repository is intended to share the evaluation workflow and selected numerical findings without exposing private recordings or credentials.
 
-- The experiment uses only three speakers.
+## 13. Limitations and Future Improvements
+
+This project has several limitations:
+
+- The pilot evaluation uses only three speakers.
 - Accent and speaker diversity are limited.
-- Three API requests failed with HTTP 403 errors.
-- Some evaluation groups have unequal sample counts.
-- WER measures word-level transcription accuracy, not semantic understanding.
-- Normalized and strict WER values depend on different text-comparison procedures.
+- Three API requests failed with HTTP 403 and were excluded from scoring.
+- The successful subgroup counts are not perfectly balanced.
+- Clean and noisy scoring currently use different normalization rule sets.
+- WER measures word-level transcription differences, not semantic understanding.
+- Normalized WER depends on the text normalization rules applied.
+- The observed differences between noise conditions are based on a small evaluation corpus.
 
-This project is an **ASR evaluation framework**, not a newly trained speech recognition model.
+Future improvements could include:
 
-## 👩‍💻 Project & Developer
+- Rescoring all clean and noisy recordings with one shared normalization pipeline.
+- Expanding the speaker and accent sample.
+- Repeating experiments across additional recordings.
+- Investigating language-switching and number-recognition errors in Hinglish.
+- Verifying failed API requests against their original request logs.
+- Extending the dashboard with additional error-analysis views.
 
-**Project:** BharatVoice Bench
+## 14. Project Context and Authorship
 
-**Developer:** Nandini
+**BharatVoice Bench** was independently developed by **Nandini** as a solo project for the **Great Indian AI Internship Challenge**.
 
-**Project Type:** Independent Research & Development
+**Gnani technology evaluated:** Gnani Prisma v2.5 Speech-to-Text.
 
-**Challenge:** Great Indian AI Internship Challenge
-
-**Model Evaluated:** Gnani Prisma v2.5
+The project is an evaluation framework and analysis workflow; it is not a newly trained speech recognition model.
 
 ---
 
 <div align="center">
 
-### 🇮🇳 BharatVoice Bench
+**BharatVoice Bench**
 
-*Evaluating multilingual speech recognition, one recording at a time.*
+*Evaluating multilingual speech recognition across languages and controlled noise conditions.*
 
-**Built with Python, research and curiosity.**
-
-[View Repository](https://github.com/niniwritescode/BharatVoice-Bench)
+[GitHub Repository](https://github.com/niniwritescode/BharatVoice-Bench)
 
 </div>
