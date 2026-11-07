@@ -177,18 +177,18 @@ Three API requests returned HTTP 403 responses during the noisy evaluation.
 
 The failed requests were associated with:
 
-- Speaker: Ram
-- Language: Hindi
-- Count: 3 requests
-- Response: HTTP 403
+- **Speaker:** Speaker 3 (anonymized)
+- **Language:** Hindi
+- **Noise condition:** Crowd noise
+- **SNR levels:** 0 dB, 10 dB, and 20 dB
+- **Count:** 3 requests
+- **Response:** HTTP 403 (Cloudflare access block)
 
-These failures were treated as API/request failures, not as transcription errors. They were excluded from WER calculations because no usable transcription was returned.
-
-The exact noise conditions associated with the three failed recordings have not yet been confirmed from the request logs.
+These failures were treated as API/request failures, not transcription errors. They were excluded from WER calculations because no usable transcription was returned. The responses contained Cloudflare block pages rather than ASR outputs.
 
 Because of these failures, the successful recording counts are uneven:
 
-| Dimension | Successful recordings |
+| **Dimension** | **Successful recordings** |
 |---|---|
 | Language | English: 27, Hindi: 24, Hinglish: 27 |
 | Noise | Crowd: 24, Fan: 27, Traffic: 27 |
