@@ -1,0 +1,30 @@
+# Secrets
+.env
+.env.*
+!.env.example
+
+# Python environment and cache
+venv/
+.venv/
+__pycache__/
+*.py[cod]
+*.pyo
+
+# Editor and OS files
+.vscode/
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Temporary files
+*.log
+
+# Private audio and reference data
+data/
+references/
+
+# Private results, transcripts and CSVs
+results/
+# Private API testing scripts
+test_stt.py
+test_noise.py

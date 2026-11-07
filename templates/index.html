@@ -1,0 +1,162 @@
+{% extends "base.html" %}
+
+{% block title %}BharatVoice Bench | Speech Recognition Research{% endblock %}
+{% block body_class %}dark-home{% endblock %}
+
+{% block content %}
+
+<section class="hero-section">
+    <div class="hero-glow hero-glow-one"></div>
+    <div class="hero-glow hero-glow-two"></div>
+
+    <div class="container hero-container">
+        <div class="row align-items-center gy-5">
+            <div class="col-lg-7">
+                <div class="eyebrow dark-eyebrow">
+                    <span class="status-dot"></span>
+                    SPEECH RECOGNITION EVALUATION
+                </div>
+
+                <h1 class="hero-title">
+                    Understanding<br>
+                    <span class="gradient-text">every voice.</span>
+                </h1>
+
+                <p class="hero-description">
+                    An experimental benchmark evaluating how Gnani Prisma v2.5
+                    transcribes English, Hindi, and Hinglish speech under
+                    different speakers and controlled background-noise conditions.
+                </p>
+
+                <div class="hero-actions">
+                    <a href="{{ url_for('analytics') }}" class="btn btn-primary-glow">
+                        Explore analytics <span>↗</span>
+                    </a>
+                    <a href="{{ url_for('methodology') }}" class="btn btn-outline-light-custom">
+                        How it works
+                    </a>
+                </div>
+
+                <div class="hero-proof">
+                    <div class="proof-item">
+                        <strong>03</strong>
+                        <span>Languages</span>
+                    </div>
+                    <div class="proof-divider"></div>
+                    <div class="proof-item">
+                        <strong>03</strong>
+                        <span>Speakers</span>
+                    </div>
+                    <div class="proof-divider"></div>
+                    <div class="proof-item">
+                        <strong>03</strong>
+                        <span>Noise types</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-5">
+                <div class="sound-visual-wrap" id="soundVisual">
+                    <div class="visual-orbit orbit-one"></div>
+                    <div class="visual-orbit orbit-two"></div>
+                    <div class="visual-orbit orbit-three"></div>
+
+                    <div class="sound-core">
+                        <div class="core-inner">
+                            <span class="core-symbol">◉</span>
+                            <span class="core-label">VOICE</span>
+                        </div>
+                    </div>
+
+                    <div class="sound-wave wave-one"></div>
+                    <div class="sound-wave wave-two"></div>
+                    <div class="sound-wave wave-three"></div>
+
+                    <div class="floating-chip chip-top">
+                        <span class="chip-dot"></span> English
+                    </div>
+                    <div class="floating-chip chip-left">हिन्दी</div>
+                    <div class="floating-chip chip-right">Hinglish</div>
+
+                    <div class="visual-caption">
+                        <span class="caption-line"></span>
+                        SIGNAL • LANGUAGE • ACCURACY
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="hero-bottom-line"></div>
+</section>
+
+<section class="home-overview section-padding">
+    <div class="container">
+        <div class="section-heading">
+            <div class="eyebrow light-eyebrow">THE PROJECT</div>
+            <h2>Measuring speech recognition in real-world conditions.</h2>
+            <p>
+                BharatVoice Bench studies transcription performance across
+                multiple Indian language settings and controlled audio conditions.
+            </p>
+        </div>
+
+        <div class="row g-4 mt-3">
+            <div class="col-md-4">
+                <article class="feature-card tilt-card">
+                    <div class="feature-icon icon-purple">◉</div>
+                    <h3>Multilingual speech</h3>
+                    <p>
+                        Evaluation across English, Hindi, and Hinglish recordings
+                        to explore language-specific transcription behavior.
+                    </p>
+                    <span class="feature-index">01 / LANGUAGE</span>
+                </article>
+            </div>
+
+            <div class="col-md-4">
+                <article class="feature-card tilt-card">
+                    <div class="feature-icon icon-blue">〰</div>
+                    <h3>Controlled noise</h3>
+                    <p>
+                        Speech is mixed with crowd, fan, and traffic ambience
+                        at different target signal-to-noise ratios.
+                    </p>
+                    <span class="feature-index">02 / AUDIO</span>
+                </article>
+            </div>
+
+            <div class="col-md-4">
+                <article class="feature-card tilt-card">
+                    <div class="feature-icon icon-orange">⌁</div>
+                    <h3>Word error analysis</h3>
+                    <p>
+                        Word Error Rate helps quantify substitutions,
+                        deletions, and insertions in the generated transcripts.
+                    </p>
+                    <span class="feature-index">03 / EVALUATION</span>
+                </article>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="home-cta">
+    <div class="container">
+        <div class="cta-panel">
+            <div>
+                <div class="eyebrow light-eyebrow">EXPLORE THE RESULTS</div>
+                <h2>Go beyond the transcript.</h2>
+                <p>
+                    Explore the evaluation graphs, inspect individual recordings,
+                    and understand the experimental methodology.
+                </p>
+            </div>
+            <a href="{{ url_for('analytics') }}" class="btn btn-primary-glow">
+                View research results <span>↗</span>
+            </a>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

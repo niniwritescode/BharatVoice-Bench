@@ -1,0 +1,212 @@
+{% extends "base.html" %}
+
+{% block title %}Methodology | BharatVoice Bench{% endblock %}
+
+{% block content %}
+<section class="page-hero">
+    <div class="container">
+        <div class="eyebrow light-eyebrow">RESEARCH DESIGN</div>
+        <h1>Behind the <span class="text-gradient-light">benchmark.</span></h1>
+        <p>
+            The experimental setup, audio preparation, evaluation method,
+            limitations, and future directions.
+        </p>
+    </div>
+</section>
+
+<section class="dashboard-section section-padding">
+    <div class="container">
+
+        <div class="method-intro">
+            <div class="eyebrow light-eyebrow">RESEARCH QUESTION</div>
+            <h2>
+                How reliably does Gnani Prisma v2.5 preserve spoken content
+                across English, Hindi, and Hinglish when exposed to different
+                speakers and controlled background noise?
+            </h2>
+            <p>
+                BharatVoice Bench is an evaluation framework. It does not
+                train or modify the underlying speech recognition model.
+            </p>
+        </div>
+
+        <div class="method-grid">
+
+            <article class="method-card">
+                <div class="method-number">01</div>
+                <div class="method-content">
+                    <span class="method-kicker">MODEL</span>
+                    <h3>Gnani Prisma v2.5</h3>
+                    <p>
+                        The project uses Gnani's Prisma v2.5 speech-to-text
+                        service to generate transcripts from the prepared
+                        audio recordings. The generated text is compared
+                        against manually prepared reference transcripts.
+                    </p>
+                </div>
+            </article>
+
+            <article class="method-card">
+                <div class="method-number">02</div>
+                <div class="method-content">
+                    <span class="method-kicker">DATASET</span>
+                    <h3>Multilingual recordings</h3>
+                    <p>
+                        The pilot dataset contains recordings from three
+                        speakers: Nandini, Shakun, and Ram. Each speaker
+                        contributed English, Hindi, and Hinglish speech,
+                        giving nine original clean recordings.
+                    </p>
+                </div>
+            </article>
+
+            <article class="method-card">
+                <div class="method-number">03</div>
+                <div class="method-content">
+                    <span class="method-kicker">AUDIO PREPARATION</span>
+                    <h3>Controlled noise mixing</h3>
+                    <p>
+                        Clean recordings were prepared as mono, 16 kHz WAV
+                        audio. Crowd, fan, and traffic ambience were mixed
+                        with speech at target SNR levels of 0 dB, 10 dB,
+                        and 20 dB.
+                    </p>
+                </div>
+            </article>
+
+            <article class="method-card">
+                <div class="method-number">04</div>
+                <div class="method-content">
+                    <span class="method-kicker">EVALUATION</span>
+                    <h3>Speech-to-text comparison</h3>
+                    <p>
+                        Audio files were submitted to the speech-to-text
+                        API. Successful transcriptions were stored and
+                        compared with their corresponding reference text.
+                    </p>
+                </div>
+            </article>
+
+            <article class="method-card">
+                <div class="method-number">05</div>
+                <div class="method-content">
+                    <span class="method-kicker">METRIC</span>
+                    <h3>Word Error Rate</h3>
+                    <p>
+                        WER measures word-level substitutions, deletions,
+                        and insertions relative to the number of words in
+                        the reference transcript.
+                    </p>
+                    <div class="formula-box">
+                        WER = (S + D + I) / N × 100
+                    </div>
+                    <p class="formula-caption">
+                        S = substitutions · D = deletions · I = insertions ·
+                        N = reference word count
+                    </p>
+                </div>
+            </article>
+
+            <article class="method-card">
+                <div class="method-number">06</div>
+                <div class="method-content">
+                    <span class="method-kicker">NORMALIZATION</span>
+                    <h3>Two evaluation views</h3>
+                    <p>
+                        Strict and normalized comparisons are maintained
+                        to examine the effect of text formatting and
+                        normalization choices. Original reference and
+                        transcription data are preserved for inspection.
+                    </p>
+                </div>
+            </article>
+        </div>
+
+        <div class="method-highlight">
+            <div class="eyebrow light-eyebrow">PILOT DATASET SUMMARY</div>
+            <div class="row g-4 mt-1">
+                <div class="col-6 col-md-3">
+                    <div class="summary-number">9</div>
+                    <div class="summary-label">Clean recordings</div>
+                </div>
+                <div class="col-6 col-md-3">
+                    <div class="summary-number">81</div>
+                    <div class="summary-label">Generated noisy files</div>
+                </div>
+                <div class="col-6 col-md-3">
+                    <div class="summary-number">78</div>
+                    <div class="summary-label">Successful noisy results</div>
+                </div>
+                <div class="col-6 col-md-3">
+                    <div class="summary-number">3</div>
+                    <div class="summary-label">Unavailable API results</div>
+                </div>
+            </div>
+            <p class="summary-footnote">
+                The three unavailable requests returned HTTP 403 responses
+                associated with a Cloudflare access block. These are treated
+                as unavailable API results, not as transcription errors
+                produced by the model.
+            </p>
+        </div>
+
+        <div class="limitations-card">
+            <div class="eyebrow light-eyebrow">LIMITATIONS & FUTURE WORK</div>
+            <h2>What this experiment does not claim</h2>
+            <ul class="limitations-list">
+                <li>
+                    Three speakers are not sufficient to represent the
+                    diversity of Indian accents, dialects, and speaking styles.
+                </li>
+                <li>
+                    The noise conditions are controlled mixtures and may
+                    not fully reproduce real-world acoustic environments.
+                </li>
+                <li>
+                    Target SNR is based on the audio-mixing procedure;
+                    it should not be interpreted as a measurement of
+                    active-speech SNR for every instant of the recording.
+                </li>
+                <li>
+                    WER measures word-level transcription differences.
+                    It does not directly measure meaning or semantic accuracy.
+                </li>
+                <li>
+                    Some API requests were unavailable, so group sizes
+                    are not perfectly balanced.
+                </li>
+            </ul>
+
+            <h3 class="future-heading">Possible next steps</h3>
+            <p>
+                Expand the speaker pool, include more regional language
+                varieties, add more recording environments, and compare
+                additional speech recognition systems under the same
+                evaluation conditions.
+            </p>
+        </div>
+
+        <div class="references-card">
+            <div class="eyebrow light-eyebrow">TOOLS & RESOURCES</div>
+            <h2>Project resources</h2>
+            <ul>
+                <li>
+                    <a href="https://docs.gnani.ai/" target="_blank" rel="noopener">
+                        Gnani AI API documentation ↗
+                    </a>
+                </li>
+                <li>
+                    <a href="https://sound-effects.bbcrewind.co.uk/" target="_blank" rel="noopener">
+                        BBC Sound Effects archive ↗
+                    </a>
+                    <span class="reference-note">
+                        Ambient audio source; check applicable usage and
+                        attribution terms before redistribution.
+                    </span>
+                </li>
+            </ul>
+        </div>
+
+    </div>
+</section>
+{% endblock %}

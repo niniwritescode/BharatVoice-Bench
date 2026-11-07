@@ -1,0 +1,134 @@
+{% extends "base.html" %}
+
+{% block title %}Recordings | BharatVoice Bench{% endblock %}
+
+{% block content %}
+<section class="page-hero">
+    <div class="container">
+        <div class="eyebrow light-eyebrow">DATA EXPLORER</div>
+        <h1>Recording <span class="text-gradient-light">library.</span></h1>
+        <p>
+            Inspect individual evaluation records and compare their
+            language, speaker, noise condition, SNR, and WER.
+        </p>
+    </div>
+</section>
+
+<section class="dashboard-section section-padding">
+    <div class="container">
+
+        <div class="section-topline">
+            <div>
+                <div class="eyebrow light-eyebrow">RECORD-LEVEL RESULTS</div>
+                <h2>Browse recordings</h2>
+            </div>
+            <span class="record-count">
+                Showing <strong id="recordCount">{{ recordings|length }}</strong>
+                of {{ recordings|length }}
+            </span>
+        </div>
+
+        <div class="filter-panel">
+            <div class="filter-search">
+                <label for="recordSearch">Search records</label>
+                <input type="search" id="recordSearch"
+                       placeholder="Search filename, speaker, language...">
+            </div>
+
+            <div class="filter-control">
+                <label for="languageFilter">Language</label>
+                <select id="languageFilter">
+                    <option value="">All languages</option>
+                </select>
+            </div>
+
+            <div class="filter-control">
+                <label for="speakerFilter">Speaker</label>
+                <select id="speakerFilter">
+                    <option value="">All speakers</option>
+                </select>
+            </div>
+
+            <div class="filter-control">
+                <label for="noiseFilter">Noise type</label>
+                <select id="noiseFilter">
+                    <option value="">All noise types</option>
+                </select>
+            </div>
+
+            <button type="button" id="resetFilters" class="btn-reset">
+                Reset filters ↺
+            </button>
+        </div>
+
+        <div class="table-card">
+            <div class="table-responsive">
+                <table class="table recordings-table" id="recordingsTable">
+                    <thead>
+                        <tr>
+                            <th>Recording</th>
+                            <th>Speaker</th>
+                            <th>Language</th>
+                            <th>Noise</th>
+                            <th>SNR</th>
+                            <th>WER</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        {% for recording in recordings %}
+                        {% set filename = recording.get('filename', recording.get('file', recording.get('audio_file', '—'))) %}
+                        {% set speaker = recording.get('speaker', recording.get('speaker_id', '—')) %}
+                        {% set language = recording.get('language', '—') %}
+                        {% set noise = recording.get('noise_type', recording.get('noise', '—')) %}
+                        {% set snr = recording.get('snr_db', recording.get('snr', '—')) %}
+                        {% set wer = recording.get('wer', '') %}
+
+                        <tr class="record-row"
+                            data-search="{{ (filename|string + ' ' + speaker|string + ' ' + language|string + ' ' + noise|string)|lower }}"
+                            data-language="{{ language|string|lower }}"
+                            data-speaker="{{ speaker|string|lower }}"
+                            data-noise="{{ noise|string|lower }}">
+
+                            <td>
+                                <span class="file-name">{{ filename }}</span>
+                            </td>
+                            <td>{{ speaker }}</td>
+                            <td><span class="table-pill">{{ language }}</span></td>
+                            <td>{{ noise }}</td>
+                            <td>{{ snr }}</td>
+                            <td>
+                                {% if wer %}
+                                    <span class="wer-value">{{ wer }}%</span>
+                                {% else %}
+                                    <span class="missing-value">Unavailable</span>
+                                {% endif %}
+                            </td>
+                        </tr>
+                        {% else %}
+                        <tr>
+                            <td colspan="6" class="empty-state">
+                                No recording results found in the results CSV.
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+
+                <div id="noResults" class="empty-state d-none">
+                    No records match your current search or filters.
+                </div>
+            </div>
+        </div>
+
+        <div class="notice-card mt-4">
+            <span class="notice-icon">ⓘ</span>
+            <p>
+                Records without a WER value may represent requests that did
+                not produce a usable transcription. They should not be
+                interpreted as zero-error results.
+            </p>
+        </div>
+    </div>
+</section>
+{% endblock %}

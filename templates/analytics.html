@@ -1,0 +1,228 @@
+
+{% extends "base.html" %}
+
+{% block title %}Interactive Analytics | BharatVoice Bench{% endblock %}
+
+{% block content %}
+
+<section class="page-hero">
+    <div class="container">
+        <div class="eyebrow light-eyebrow">RESEARCH OVERVIEW</div>
+        <h1>Performance <span class="text-gradient-light">analytics.</span></h1>
+        <p>
+            Explore actual transcription results across languages,
+            noise environments, SNR levels, and speakers.
+            Hover, zoom, click, and filter the charts.
+        </p>
+    </div>
+</section>
+
+<section class="dashboard-section section-padding">
+    <div class="container">
+
+        <div class="section-topline">
+            <div>
+                <div class="eyebrow light-eyebrow">EXPERIMENT SNAPSHOT</div>
+                <h2>Evaluation at a glance</h2>
+            </div>
+            <span class="live-label">
+                <span class="status-dot"></span> CSV DATA
+            </span>
+        </div>
+
+        <div class="row g-3 metric-row">
+
+            <div class="col-md-6 col-xl-3">
+                <div class="metric-card">
+                    <span class="metric-label">Visible records</span>
+                    <div class="metric-value" id="recordMetric">
+                        {{ total_records }}
+                    </div>
+                    <span class="metric-note">Matching current filters</span>
+                </div>
+            </div>
+
+            <div class="col-md-6 col-xl-3">
+                <div class="metric-card">
+                    <span class="metric-label">Mean per-record WER</span>
+                    <div class="metric-value" id="meanWerMetric">
+                        {{ "%.2f"|format(average_wer) }}<small>%</small>
+                    </div>
+                    <span class="metric-note">Average of individual record WER</span>
+                </div>
+            </div>
+
+            <div class="col-md-6 col-xl-3">
+                <div class="metric-card">
+                    <span class="metric-label">Corpus-level WER</span>
+                    <div class="metric-value" id="corpusWerMetric">
+                        {{ "%.2f"|format(corpus_wer) }}<small>%</small>
+                    </div>
+                    <span class="metric-note">Total errors / reference words</span>
+                </div>
+            </div>
+
+            <div class="col-md-6 col-xl-3">
+                <div class="metric-card">
+                    <span class="metric-label">Languages</span>
+                    <div class="metric-value" id="languageMetric">3</div>
+                    <span class="metric-note">English · Hindi · Hinglish</span>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="notice-card mt-4">
+            <span class="notice-icon">ⓘ</span>
+            <p>
+                <strong>Two WER calculations:</strong>
+                Mean per-record WER is the average of individual recording
+                percentages. Corpus-level WER pools all substitutions,
+                deletions, and insertions before dividing by total
+                reference words. These values can differ.
+            </p>
+        </div>
+
+        <!-- FILTERS -->
+
+        <div class="interactive-toolbar mt-5">
+            <div>
+                <div class="eyebrow light-eyebrow">INTERACTIVE EXPLORER</div>
+                <h2>Explore the experiment</h2>
+                <p>Choose a condition or click a chart bar to filter the dashboard.</p>
+            </div>
+
+            <button id="resetChartFilters" class="btn-reset">
+                Reset all filters ↺
+            </button>
+        </div>
+
+        <div class="chart-filter-panel">
+
+            <div class="filter-control">
+                <label for="chartLanguage">Language</label>
+                <select id="chartLanguage">
+                    <option value="">All languages</option>
+                </select>
+            </div>
+
+            <div class="filter-control">
+                <label for="chartNoise">Noise type</label>
+                <select id="chartNoise">
+                    <option value="">All noise types</option>
+                </select>
+            </div>
+
+            <div class="filter-control">
+                <label for="chartSnr">SNR level</label>
+                <select id="chartSnr">
+                    <option value="">All SNR levels</option>
+                </select>
+            </div>
+
+            <div class="filter-control">
+                <label for="chartSpeaker">Speaker</label>
+                <select id="chartSpeaker">
+                    <option value="">All speakers</option>
+                </select>
+            </div>
+
+        </div>
+
+        <!-- CHARTS -->
+
+        <div class="section-topline graph-heading">
+            <div>
+                <div class="eyebrow light-eyebrow">LIVE VISUAL ANALYSIS</div>
+                <h2>Where does transcription error occur?</h2>
+            </div>
+            <span class="subtle-label">MEAN PER-RECORD WER</span>
+        </div>
+
+        <div class="row g-4">
+
+            <div class="col-lg-6">
+                <article class="chart-card">
+                    <div class="chart-card-top">
+                        <div>
+                            <span class="chart-number">01 / LANGUAGE</span>
+                            <h3>WER by language</h3>
+                            <p>Compare English, Hindi, and Hinglish.</p>
+                        </div>
+                        <span class="chart-tag">INTERACTIVE</span>
+                    </div>
+                    <div id="languageChart" class="plotly-chart"></div>
+                </article>
+            </div>
+
+            <div class="col-lg-6">
+                <article class="chart-card">
+                    <div class="chart-card-top">
+                        <div>
+                            <span class="chart-number">02 / ENVIRONMENT</span>
+                            <h3>WER by noise type</h3>
+                            <p>Compare crowd, fan, and traffic noise.</p>
+                        </div>
+                        <span class="chart-tag">INTERACTIVE</span>
+                    </div>
+                    <div id="noiseChart" class="plotly-chart"></div>
+                </article>
+            </div>
+
+            <div class="col-lg-6">
+                <article class="chart-card">
+                    <div class="chart-card-top">
+                        <div>
+                            <span class="chart-number">03 / SIGNAL</span>
+                            <h3>WER by SNR</h3>
+                            <p>Explore the target signal-to-noise levels.</p>
+                        </div>
+                        <span class="chart-tag">INTERACTIVE</span>
+                    </div>
+                    <div id="snrChart" class="plotly-chart"></div>
+                </article>
+            </div>
+
+            <div class="col-lg-6">
+                <article class="chart-card">
+                    <div class="chart-card-top">
+                        <div>
+                            <span class="chart-number">04 / SPEAKER</span>
+                            <h3>WER by speaker</h3>
+                            <p>Compare results across recorded speakers.</p>
+                        </div>
+                        <span class="chart-tag">INTERACTIVE</span>
+                    </div>
+                    <div id="speakerChart" class="plotly-chart"></div>
+                </article>
+            </div>
+
+        </div>
+
+        <div class="interpretation-panel mt-5">
+            <div class="eyebrow light-eyebrow">INTERPRETATION</div>
+            <h2>Read the results in context</h2>
+            <p>
+                These charts summarize the normalized evaluation results.
+                The dataset is a pilot study with three speakers. Three
+                API requests did not return usable transcripts, so group
+                sizes are not perfectly balanced. WER measures word-level
+                transcription differences, not semantic understanding.
+            </p>
+            <a href="{{ url_for('methodology') }}" class="text-link">
+                Read the methodology <span>→</span>
+            </a>
+        </div>
+
+    </div>
+</section>
+
+<!-- Plotly library -->
+<script src="https://cdn.plot.ly/plotly-2.35.2.min.js"></script>
+
+<!-- Actual CSV data passed from Flask -->
+<script type="application/json" id="chart-data">
+    {{ chart_records | tojson }}
+</script>
+
+{% endblock %}
