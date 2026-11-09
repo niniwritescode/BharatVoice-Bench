@@ -173,7 +173,7 @@ These observations describe this particular pilot corpus. They should not be int
 
 ## 6. Failed API Requests and Data Handling
 
-Three API requests returned HTTP 403 responses during the noisy evaluation.
+Three noisy transcription requests returned HTTP 403 responses with Cloudflare block pages. All three were Hindi recordings from Speaker 3 under crowd-noise conditions at 0 dB, 10 dB, and 20 dB SNR. These were infrastructure-level request failures, not ASR transcription errors, and were excluded from WER scoring. The remaining 78 noisy recordings were successfully evaluated.
 
 The failed requests were associated with:
 
